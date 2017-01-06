@@ -33,4 +33,5 @@
     </table>
     <p id="iterations"> Number of iterations: <?= $oneMap->nIterations; ?> </p>
 </div>
-
+<br>
+<br>

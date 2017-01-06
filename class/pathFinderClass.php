@@ -1,11 +1,8 @@
-<?php
-    
-    //require $_SERVER['DOCUMENT_ROOT'].'/a_path_finder/model/input.php';
-    //http://gregtrowbridge.com/a-basic-pathfinding-algorithm/
+<?php 
 /**
  * Description of pathFinderClass
  *
- * @author Martinez
+ * @author Martinez (Marcin Leśniak)
  * 
  * W klasie zaimplementowano algorytm (rodzaj algorytmu Dijkstry) znajdujący 
  * najkrótszą ścieżkę z punktu początkowego do końcowego omijajaca przeszkody na
@@ -18,12 +15,14 @@
  * osiągnięcia punktu docelowego.
  *  
  */
+
 class pathFinderClass {
     
     private $_start;
     private $_end;
     private $_obstacle;
     private $_empty;
+    private $_tempMap;         //tymczasowa mapa do zaznaczania odwiedzonych pozycji
     
     public $fPath = array();   //ścieżka wynikowa
     public $sPoint = array();  //punkt początkowy
@@ -47,7 +46,7 @@ class pathFinderClass {
     
     //metoda odczytująca pojedynczą mapę i punkt startowy
     public function startSearch($inputMap){
-        
+        $this->_tempMap = $inputMap;
         $num_rows= count($inputMap);
         $num_cols= count($inputMap[0]); 
        
@@ -100,7 +99,7 @@ class pathFinderClass {
             $countD=0;
             foreach($directions as $dir){
                 $countD++;
-                $newLocation = $this->exploreDirection($currLocation, $dir, $inputMap); 
+                $newLocation = $this->exploreDirection($currLocation, $dir); 
                 if($newLocation['status'] == 'meta') {
                     $this->nIterations = $count;
                     $resultMap = $this->returnPathGrid($startPoint, $newLocation['path'], $inputMap);
@@ -110,12 +109,9 @@ class pathFinderClass {
                 }
             }
             $countQ = count($queue);
-            if($count > 500){
-                break;
-            }
         }
         //ścieżka nie znaleziona
-        echo 'Sorry, I could not find any path.'.$countQ;
+        echo 'Sorry, I could not find any path.';
         return false;
     }
     
@@ -128,6 +124,7 @@ class pathFinderClass {
         $pathRow = $startPoint[0];
         $pathCol = $startPoint[1];
         $pathGrid[$pathRow][$pathCol] = '0';
+        
         //pętla wpisująca kolejne kroki ścieżki do tablicy wynikowej
         for($i = 0; $i < $fp_length; $i++){
             
@@ -156,7 +153,7 @@ class pathFinderClass {
     }
     
     //metoda dodająca nową pozycję
-    private function exploreDirection($currLocation, $direction, $inputMap){
+    private function exploreDirection($currLocation, $direction){
         $newPath = array_splice($currLocation['path'], 0);
         array_push($newPath, $direction);
         $dft = $currLocation['distFromTop'];
@@ -187,11 +184,13 @@ class pathFinderClass {
             'status'=>'unknown'
         );
         
-        $newLocation['status']= $this->locationStatus($newLocation, $inputMap);
+        //$newLocation['status']= $this->locationStatus($newLocation, $inputMap);
+        $newLocation['status']= $this->locationStatus($newLocation, $this->_tempMap);
         if($newLocation['status']== 'valid'){
             $row= $newLocation['distFromTop'];
             $col= $newLocation['distFromLeft'];
-            $inputMap[$row][$col] = 'visited';
+            //$inputMap[$row][$col] = 'visited';
+            $this->_tempMap[$row][$col] = 'visited';
         }
         
         return $newLocation;
@@ -218,8 +217,7 @@ class pathFinderClass {
         }else{
             return 'valid';
         }
-        
     }
 }
 
-//end of pathfinderClass
+//koniec klasy pathfinderClass

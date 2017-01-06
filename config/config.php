@@ -1,10 +1,6 @@
 <?php
 
-/* 
- * Define starting and ending point, as well as empty field and obstacle in 
- * arrays representing grids(maps)
- */
-
+    define("__URL__", $_SERVER['DOCUMENT_ROOT'].'/a_path_finder/');
     define('__START__', 's');
     define('__END__', 'm');
     define('__OBSTACLE__', 'x');

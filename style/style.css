@@ -10,6 +10,13 @@ body, #pack{
     text-align: center;
     background-color:#DFE6E8;
 }
+#reload{
+    position:fixed;
+    right:0;
+    top:80px;
+    width:80px;
+    margin:5px;
+}
 section{
     padding-left: 20px;
     display:flex;
@@ -25,6 +32,7 @@ a{
     border:1px solid gray;
     border-radius:2px;
     background-color:#DFE6E8;
+    text-align: center;
 }
 .a_wrap{
     margin:5px;
@@ -35,6 +43,9 @@ a{
 a:hover{
     color:gray;
 }
+h3{
+    margin:10px 5px 10px 5px;
+}
 .map {
   margin: 0 0 20px 0;
   border:1px solid;
@@ -42,6 +53,7 @@ a:hover{
   padding:5px;
   width:200px;
   float:left;
+  background-color: #EDF7FA;
 }
 #result_map{
     position:absolute;
@@ -59,6 +71,7 @@ a:hover{
   width: 20px;
   height: 20px;
   text-align: center;
+  background-color: #fff;
 }
 
 .map .map_start {

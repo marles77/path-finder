@@ -1,5 +1,5 @@
 <?php
-    //załadowanie tablicy input oraz klasy szukającej ścieżki
+    //załadowanie tablicy input oraz klasy szukającej ścieżki i kofiguracji
     require 'model/input.php';
     require 'class/pathFinderClass.php';
     require 'config/config.php';
@@ -10,24 +10,22 @@
     $map_num = 0;
     if(filter_input(INPUT_GET, "map_num")!=""){
         $map_num = filter_input(INPUT_GET, "map_num", FILTER_SANITIZE_NUMBER_INT);
-        $oneMap = new pathFinderClass;
-        $i=0;
-        $map_title= '';
-        foreach($input as $map=>$data){
-          $i++;
-          if($i == $map_num){
-              $map_title= $map;
-              break;
-          }
+        if($map_num!= "" && $map_num > 0 && $map_num <= count($input)){
+            $oneMap = new pathFinderClass;
+            $i=0;
+            $map_title= '';
+            foreach($input as $map=>$data){
+              $i++;
+              if($i == $map_num){
+                  $map_title= $map;
+                  break;
+              }
+            }
+            //przekazujemy mapę wynikową z obiektu
+            $resultMap = $oneMap->startSearch($input[$map_title]);
+            //pobieramy długość ścieżki
+            $pathLen = ''.count($oneMap->fPath);
         }
-        
-        $resultMap = $oneMap->startSearch($input[$map_title]);
-        $pathLen = ''.count($oneMap->fPath);
-        /*var_dump($oneMap->sPoint);
-        echo '<br>';
-        var_dump($oneMap->fPath);
-        echo '<br>';
-        var_dump($resultMap);*/
     }
     
 ?>
@@ -44,17 +42,17 @@
     </head>
     <body>
         <div id="pack">
+            <a id="reload" href="index.php">Reload</a>
             <div class="header">
                 <h1>Example of pathFinderClass</h1>
             </div>
             <!-- oryginalne mapy -->
             <?php include('pages/originalMaps.php'); ?>
-            
             <?php if($resultMap != null && $resultMap != false): ?>
             <!-- mapa wynikowa -->
             <?php include('pages/resultMap.php'); ?>
             <?php endif; ?>
-            
+            <!-- stopka -->
             <?php include('pages/foot.php'); ?>    
         </div>
         <script src="script/script.js"></script>
