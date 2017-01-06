@@ -6,16 +6,14 @@ body, #pack{
     color:black;
     font-family:'Verdana', sans-serif;
 }
-#pack{
-    padding:10px;
-}
 .header{
     text-align: center;
+    background-color:#DFE6E8;
 }
 section{
-    border:1px solid;
-    display:block;
-    height:200px;
+    padding-left: 20px;
+    display:flex;
+    min-height:100px;
     width:400px;
 }
 a{
@@ -26,12 +24,12 @@ a{
     padding:2px;
     border:1px solid gray;
     border-radius:2px;
+    background-color:#DFE6E8;
 }
 .a_wrap{
     margin:5px;
     min-width:50px;
-    border:1px solid gray;
-    border-radius:2px;
+    align-items: center;
     float:left;
 }
 a:hover{
@@ -40,19 +38,17 @@ a:hover{
 .map {
   margin: 0 0 20px 0;
   border:1px solid;
+  border-radius:2px;
   padding:5px;
-  
   width:200px;
   float:left;
-  
 }
 #result_map{
     position:absolute;
-    left:400px;
+    left:500px;
 }
 .map table {
   border-collapse: collapse;
-  
 }
 
 .map table, .map tr, .map td {
@@ -62,7 +58,6 @@ a:hover{
 .map td {
   width: 20px;
   height: 20px;
-  
   text-align: center;
 }
 

@@ -33,15 +33,10 @@
 ?>
 
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>A Path Test</title>
+        <title>PathFinder</title>
         <link rel="stylesheet" href="style/style.css">
         <script>
             var map_num = <?= $map_num ?>;
@@ -50,7 +45,7 @@ and open the template in the editor.
     <body>
         <div id="pack">
             <div class="header">
-                <h1>Application of pathFinderClass</h1>
+                <h1>Example of pathFinderClass</h1>
             </div>
             <?php 
                 $map_num = 0;
@@ -137,7 +132,7 @@ and open the template in the editor.
                 </div>
             <?php endif; ?>
             
-            
+                
         </div>
         <script src="script/script.js"></script>
     </body>
