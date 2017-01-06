@@ -1,0 +1,63 @@
+@Charset "UTF-8";
+
+body, #pack{
+    margin:0;
+    padding:0;
+}
+#pack{
+    padding:10px;
+}
+section{
+    border:1px solid;
+    display:block;
+    height:200px;
+    width:400px;
+}
+a{
+    display:block;
+    
+}
+.a_wrap{
+    
+}
+.map {
+  margin: 0 0 20px 0;
+  border:1px solid;
+  padding:5px;
+  
+  width:200px;
+  float:left;
+  
+}
+#result_map{
+    position:absolute;
+    left:400px;
+}
+.map table {
+  border-collapse: collapse;
+  
+}
+
+.map table, .map tr, .map td {
+  border: 1px solid black;
+}
+
+.map td {
+  width: 20px;
+  height: 20px;
+  
+  text-align: center;
+}
+
+.map .map_start {
+  background: grey;
+}
+
+.map .map_path {
+  background: yellow;
+}
+
+.map .map_meta {
+  background: red;
+}
+
