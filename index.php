@@ -47,92 +47,15 @@
             <div class="header">
                 <h1>Example of pathFinderClass</h1>
             </div>
-            <?php 
-                $map_num = 0;
-                foreach($input as $map=>$data):
-                $map_num++;    ?>
-            <section>
-                <div class="map">
-                    <h3><?= $map ?></h3>
-                    
-                    <table>
-                        
-                        <?php 
-                            $num_rows= count($data);
-                            for($i= 0; $i<$num_rows; $i++): ?>
-                                <tr>
-                                    
-                                    <?php
-                                        $num_cols= count($data[$i]);
-                                        for($j= 0; $j<$num_cols; $j++){
-                                            switch($data[$i][$j]){
-                                                case 's': 
-                                                          echo '<td class="map_start">s</td>';
-                                                          break;
-                                                case 'm': 
-                                                          echo '<td class="map_meta">m</td>';
-                                                          break;
-                                                case 'x': 
-                                                          echo '<td>x</td>';
-                                                          break;
-                                                case ' ':  echo '<td></td>';
-                                                          break;
-                                                default:  echo '<td class="map_path"></td>';     
-                                            }
-                                        }
-                                    ?>
-                                    
-                                </tr>
-                        <?php endfor ?>
-                    </table>
-                    
-                    
-                </div>
-                <div class="a_wrap">
-                    <!-- przekazujemy numer mapy metodą GET -->
-                    <a href="?map_num=<?= $map_num ?>">Find path > </a>
-                </div>
-            </section>
-                    
-            <?php endforeach; ?>
+            <!-- oryginalne mapy -->
+            <?php include('pages/originalMaps.php'); ?>
             
             <?php if($resultMap != null && $resultMap != false): ?>
             <!-- mapa wynikowa -->
-            <div class="map" id="result_map">
-                    <h3>Mapa wynikowa</h3>
-                    <table>
-                        <?php 
-                            $num_rows= count($resultMap);
-                            for($i= 0; $i<$num_rows; $i++): ?>
-                                <tr>
-                                    
-                                    <?php
-                                        $num_cols= count($resultMap[$i]);
-                                        for($j= 0; $j<$num_cols; $j++){
-                                            switch($resultMap[$i][$j]){
-                                                case '0': 
-                                                          echo '<td class="map_start">0</td>';
-                                                          break;
-                                                case $pathLen: 
-                                                          echo '<td class="map_meta">'.$pathLen.'</td>';
-                                                          break;
-                                                case 'x': 
-                                                          echo '<td>x</td>';
-                                                          break;
-                                                case ' ':  echo '<td></td>';
-                                                          break;
-                                                default:  echo '<td class="map_path">'.$resultMap[$i][$j].'</td>';     
-                                            }
-                                        }
-                                    ?>
-                                    
-                                </tr>
-                        <?php endfor ?>
-                    </table>
-                </div>
+            <?php include('pages/resultMap.php'); ?>
             <?php endif; ?>
             
-                
+            <?php include('pages/foot.php'); ?>    
         </div>
         <script src="script/script.js"></script>
     </body>

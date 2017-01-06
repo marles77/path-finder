@@ -2,7 +2,7 @@
 
 //alert('Script loaded');
 
-//set TOP property of the result map
+//ustawiamy właściwość TOP dla result map
 var nodeNum = (parseInt(map_num)-1);
 var nodes = document.getElementById('pack').getElementsByTagName('section');
 var nodeSection = nodes[nodeNum];

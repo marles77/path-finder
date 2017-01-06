@@ -7,10 +7,15 @@
  *
  * @author Martinez
  * 
- * This class implements an algorithm which finds the shortest path from point A
- * to point B on a 2D grid. The basic method has one argument of an array type
- * which is a grid of fields marked as start point, end point, obstacles, and 
- * empty fields. 
+ * W klasie zaimplementowano algorytm (rodzaj algorytmu Dijkstry) znajdujący 
+ * najkrótszą ścieżkę z punktu początkowego do końcowego omijajaca przeszkody na
+ * dwuwymiarowej siatce.
+ * Podstawowa metoda przyjmuje jeden argument w postaci tablicy reprezentujacej
+ * siatke pól oznaczonych jako start, end, empty lub obstacle. Metoda zwraca
+ * tablicę wynikową będącą kopią oryginalnej mapy z zaznaczoną ścieżką. Klasa 
+ * daje również dostęp do tablicy z poszczególnymi krokami (jako kierunki), 
+ * tablicy reprezentującej punkt początkowy oraz liczbę iteracji potrzebnych do
+ * osiągnięcia punktu docelowego.
  *  
  */
 class pathFinderClass {
@@ -58,10 +63,16 @@ class pathFinderClass {
                         break;
                     }
                 }
+                //jeśli nie ma punktu startowego
+                if($i==$num_rows-1){
+                    echo 'Sorry, I could not find the start point on the map.';
+                    return false;
+                }
             }
         }
         //zaczynamy szukać ścieżki
         $resultMap = $this->findPath($startPoint, $inputMap);
+        //i zwracamy mapę wynikową
         return $resultMap;
     }
     
@@ -86,7 +97,9 @@ class pathFinderClass {
             
             $currLocation = array_shift($queue);
             $directions = ['Up', 'Right', 'Down', 'Left'];
+            $countD=0;
             foreach($directions as $dir){
+                $countD++;
                 $newLocation = $this->exploreDirection($currLocation, $dir, $inputMap); 
                 if($newLocation['status'] == 'meta') {
                     $this->nIterations = $count;
@@ -97,8 +110,12 @@ class pathFinderClass {
                 }
             }
             $countQ = count($queue);
+            if($count > 500){
+                break;
+            }
         }
         //ścieżka nie znaleziona
+        echo 'Sorry, I could not find any path.'.$countQ;
         return false;
     }
     
@@ -138,9 +155,8 @@ class pathFinderClass {
         return $pathGrid;
     }
     
-    
     //metoda dodająca nową pozycję
-    private function exploreDirection($currLocation, $direction, $inputMap){ //to do: tu cos nie dziala nie widzi tablic
+    private function exploreDirection($currLocation, $direction, $inputMap){
         $newPath = array_splice($currLocation['path'], 0);
         array_push($newPath, $direction);
         $dft = $currLocation['distFromTop'];
@@ -198,10 +214,12 @@ class pathFinderClass {
         }else if($inputMap[$dft][$dfl]=== $this->_end){
             return 'meta';
         }else if($inputMap[$dft][$dfl]!= $this->_empty){
-            return'block';
+            return 'block';
         }else{
             return 'valid';
         }
         
     }
 }
+
+//end of pathfinderClass

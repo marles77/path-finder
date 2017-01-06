@@ -72,4 +72,20 @@ a:hover{
 .map .map_meta {
   background: red;
 }
-
+#iterations{
+    font-size:10px;
+}
+footer{
+    position:fixed;
+    bottom:0;
+    right:0;
+    min-width:200px;
+    min-height:80px;
+    background-color:#DFE6E8;
+    padding:20px;
+}
+#contact{
+    font-weight:normal;
+    font-size: 12px;
+    border:none;
+}
