@@ -15,11 +15,21 @@
  */
 class pathFinderClass {
     
-    public $fPath = array();
-    public $sPoint = array();
+    private $_start;
+    private $_end;
+    private $_obstacle;
+    private $_empty;
+    
+    public $fPath = array();   //ścieżka wynikowa
+    public $sPoint = array();  //punkt początkowy
+    public $nIterations;       //liczba iteracji 
     
     public function __construct(){
-        
+        //oznaczenia punktów na mapie zdefiniowane w pliku config.php
+        $this->_start = __START__;
+        $this->_end = __END__;
+        $this->_obstacle = __OBSTACLE__;
+        $this->_empty = __EMPTY__;
     }
     
     public function __get($name){
@@ -31,13 +41,11 @@ class pathFinderClass {
     }
     
     //metoda odczytująca pojedynczą mapę i punkt startowy
-    public function markMap($inputMap){
+    public function startSearch($inputMap){
         
         $num_rows= count($inputMap);
         $num_cols= count($inputMap[0]); 
        
-        //$grid = array($num_rows, $num_cols);
-   
         //wyszukiwanie punktu startowego na mapie
         $startPoint = [];
         for($i=0; $i< $num_rows; $i++){
@@ -45,7 +53,7 @@ class pathFinderClass {
                 break;
             }else{
                 for($j=0; $j < $num_cols; $j++){
-                    if($inputMap[$i][$j]=='s'){
+                    if($inputMap[$i][$j]=== $this->_start){
                         $startPoint = array($i, $j);
                         break;
                     }
@@ -70,14 +78,8 @@ class pathFinderClass {
         );
         
         $queue = array($location);
-        /*var_dump($queue);
-        echo '<br>';
-        
-        $currLocation = array_shift($queue);
-        var_dump($queue);*/
-        
         $countQ = count($queue);
-        //pętla wyszukująca mety
+        //pętla szukująca mety
         $count = 0;
         while($countQ > 0){
             $count++;
@@ -85,14 +87,9 @@ class pathFinderClass {
             $currLocation = array_shift($queue);
             $directions = ['Up', 'Right', 'Down', 'Left'];
             foreach($directions as $dir){
-                $newLocation = $this->exploreInDirection($currLocation, $dir, $inputMap); 
+                $newLocation = $this->exploreDirection($currLocation, $dir, $inputMap); 
                 if($newLocation['status'] == 'meta') {
-                    /*
-                    echo 'count: '.$count.'<br>';
-                    var_dump($newLocation['path']);
-                    echo '<br>';
-                    var_dump($inputMap);
-                    return $newLocation['path'];*/
+                    $this->nIterations = $count;
                     $resultMap = $this->returnPathGrid($startPoint, $newLocation['path'], $inputMap);
                     return $resultMap;
                 }elseif($newLocation['status'] == 'valid'){
@@ -143,7 +140,7 @@ class pathFinderClass {
     
     
     //metoda dodająca nową pozycję
-    private function exploreInDirection($currLocation, $direction, $inputMap){ //to do: tu cos nie dziala nie widzi tablic
+    private function exploreDirection($currLocation, $direction, $inputMap){ //to do: tu cos nie dziala nie widzi tablic
         $newPath = array_splice($currLocation['path'], 0);
         array_push($newPath, $direction);
         $dft = $currLocation['distFromTop'];
@@ -198,9 +195,9 @@ class pathFinderClass {
            $location['distFromTop'] < 0 || 
            $location['distFromTop'] >= $num_rows){
             return 'invalid';
-        }else if($inputMap[$dft][$dfl]=='m'){
+        }else if($inputMap[$dft][$dfl]=== $this->_end){
             return 'meta';
-        }else if($inputMap[$dft][$dfl]!= ' '){
+        }else if($inputMap[$dft][$dfl]!= $this->_empty){
             return'block';
         }else{
             return 'valid';

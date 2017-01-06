@@ -1,8 +1,9 @@
 <?php
     //załadowanie tablicy input oraz klasy szukającej ścieżki
     require 'model/input.php';
-    require 'class/pathClass.php';
-    //var_dump($input);
+    require 'class/pathFinderClass.php';
+    require 'config/config.php';
+    
     $resultMap = [];
     $pathLen = 0;
     //sprawdzamy numer mapy przekazany w tablicy GET
@@ -20,7 +21,7 @@
           }
         }
         
-        $resultMap = $oneMap->markMap($input[$map_title]);
+        $resultMap = $oneMap->startSearch($input[$map_title]);
         $pathLen = ''.count($oneMap->fPath);
         /*var_dump($oneMap->sPoint);
         echo '<br>';
@@ -48,14 +49,16 @@ and open the template in the editor.
     </head>
     <body>
         <div id="pack">
-            
+            <div class="header">
+                <h1>Application of pathFinderClass</h1>
+            </div>
             <?php 
                 $map_num = 0;
                 foreach($input as $map=>$data):
                 $map_num++;    ?>
             <section>
                 <div class="map">
-                    <h2><?= $map ?></h2>
+                    <h3><?= $map ?></h3>
                     
                     <table>
                         
@@ -92,7 +95,7 @@ and open the template in the editor.
                 </div>
                 <div class="a_wrap">
                     <!-- przekazujemy numer mapy metodą GET -->
-                    <a href="?map_num=<?= $map_num ?>">Find path</a>
+                    <a href="?map_num=<?= $map_num ?>">Find path > </a>
                 </div>
             </section>
                     
@@ -101,7 +104,7 @@ and open the template in the editor.
             <?php if($resultMap != null && $resultMap != false): ?>
             <!-- mapa wynikowa -->
             <div class="map" id="result_map">
-                    <h2>Mapa wynikowa</h2>
+                    <h3>Mapa wynikowa</h3>
                     <table>
                         <?php 
                             $num_rows= count($resultMap);
@@ -133,29 +136,8 @@ and open the template in the editor.
                     </table>
                 </div>
             <?php endif; ?>
-            <!--
-            <div class="map">
-                <h2>Nazwa mapy #1 3x3</h2>
-
-                <table>
-                    <tr>
-                        <td class="map_start">0</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="map_path">1</td>
-                        <td class="map_path">2</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td class="map_path">3</td>
-                        <td class="map_meta">4</td>
-                    </tr>
-                </table>
-            </div>
-            -->
+            
+            
         </div>
         <script src="script/script.js"></script>
     </body>

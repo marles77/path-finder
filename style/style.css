@@ -3,9 +3,14 @@
 body, #pack{
     margin:0;
     padding:0;
+    color:black;
+    font-family:'Verdana', sans-serif;
 }
 #pack{
     padding:10px;
+}
+.header{
+    text-align: center;
 }
 section{
     border:1px solid;
@@ -15,10 +20,22 @@ section{
 }
 a{
     display:block;
-    
+    text-decoration: none;
+    color:black;
+    font-weight:bold;
+    padding:2px;
+    border:1px solid gray;
+    border-radius:2px;
 }
 .a_wrap{
-    
+    margin:5px;
+    min-width:50px;
+    border:1px solid gray;
+    border-radius:2px;
+    float:left;
+}
+a:hover{
+    color:gray;
 }
 .map {
   margin: 0 0 20px 0;
